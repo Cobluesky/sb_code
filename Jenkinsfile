@@ -6,13 +6,22 @@ pipeline {
   }
   environment {
     gitName = 'Cobluesky'
-    gitEmail = 'habuhamo900@gmail.com'
+    gitEmail = 'Cobluesky@gmail.com'
+    githubCredential = 'git_cre'
   }
   stages {
-    stage('Example') {
+    stage('Checkout Github') {
       steps {
-        echo 'Hello World'
+          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/Cobluesky/sb_code.git']]])
+          }
+      post {
+        failure {
+          echo 'Repository clone failure'
         }
+        success {
+          echo 'Repository clone success'  
+        }
+      }
     }
   }
 }
