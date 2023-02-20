@@ -5,39 +5,52 @@ pipeline {
     maven 'my_maven'
   }
   environment {
-    gitName = 'pcmin929'
-    gitEmail = 'pcmin929@gmail.com'
+    gitName = 'Cobluesky'
+    gitEmail = 'habuhamo900@gmail.com'
     githubCredential = 'git_cre'
+    dockerHubRegistry = 'g1mlet/sbimage'
   }
   stages {
     stage('Checkout Github') {
       steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url:'https://github.com/Cobluesky/sb_code.git']]])
-        }
+          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/Cobluesky/sb_code.git']]])
+          }
       post {
         failure {
-            echo 'Repository Clone Failure'
+          echo 'Repository clone failure'
         }
         success {
-            ehco 'Repository Clone Success'
+          echo 'Repository clone success'  
         }
       }
     }
-  }
 
-  stages {
-    stage('') {
+    stage('Maven Build') {
       steps {
           sh 'mvn clean install'
-        }
+          }
       post {
         failure {
-            echo 'Maven Jar Build Failure'
+          echo 'Maven jar build failure'
         }
         success {
-            ehco 'Repository Clone Success'
+          echo 'Maven jar build success'  
+        }
+      }
+    }
+    stage('Docker Image Build') {
+      steps {
+          sh "docker build -t ${dockerHubRegistry}:${currentBuild.number} ."
+          sh "docker build -t ${dockerHubRegistry}:latest ."
+          }
+      post {
+        failure {
+          echo 'Docker image build failure'
+        }
+        success {
+          echo 'Docker image build success'  
         }
       }
     }
   }
-} 
+}
