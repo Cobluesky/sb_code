@@ -5,14 +5,14 @@ pipeline {
     maven 'my_maven'
   }
   environment {
-    gitName = 'Cobluesky'
-    gitEmail = 'habuhamo900@gmail.com'
+    gitName = 'pcmin929'
+    gitEmail = 'pcmin929@gmail.com'
     githubCredential = 'git_cre'
   }
   stages {
     stage('Checkout Github') {
       steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/Cobluesky/sb_code.git']]])
+          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, 'https://github.com/Cobluesky/sb_code.git']]])
         }
       post {
         failure {
@@ -25,8 +25,8 @@ pipeline {
     }
   }
 
-   stages {
-    stage('Maven Something') {
+  stages {
+    stage('') {
       steps {
           sh 'mvn clean install'
         }
@@ -39,5 +39,5 @@ pipeline {
         }
       }
     }
-  } 
-}
+  }
+} 
