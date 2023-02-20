@@ -5,8 +5,8 @@ pipeline {
     maven 'my_maven'
   }
   environment {
-    gitName = 'pcmin929'
-    gitEmail = 'pcmin929@gmail.com'
+    gitName = 'Cobluesky'
+    gitEmail = 'habuhamo900@gmail.com'
     githubCredential = 'git_cre'
   }
   stages {
