@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springbootapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spring
+  template:
+    metadata:
+      labels:
+        app: spring
+    spec:
+      containers:
+        - name: sbimage
+          image: g1mlet/sbimage:19
