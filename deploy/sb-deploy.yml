@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: sbimage
-          image: g1mlet/sbimage:23
+          image: g1mlet/sbimage:6
